@@ -5,6 +5,7 @@ export interface NewGroceryItem {
   quantityText?: string;
   section: Section;
   staple?: boolean;
+  storageNote?: string;
 }
 
 export function addItem(list: GroceryItem[], input: NewGroceryItem): GroceryItem[] {
@@ -15,6 +16,7 @@ export function addItem(list: GroceryItem[], input: NewGroceryItem): GroceryItem
     section: input.section,
     checked: false,
     staple: input.staple ?? false,
+    storageNote: input.storageNote,
   };
   return [...list, item];
 }

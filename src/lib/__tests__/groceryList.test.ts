@@ -34,6 +34,11 @@ describe("addItem", () => {
     const [added] = addItem([], { name: "Eggs", section: "Protein" });
     expect(added!.staple).toBe(false);
   });
+
+  it("carries a storageNote through when given", () => {
+    const [added] = addItem([], { name: "Ground turkey", section: "Protein", storageNote: "Freeze if not cooking within 2 days" });
+    expect(added!.storageNote).toBe("Freeze if not cooking within 2 days");
+  });
 });
 
 describe("editItem", () => {

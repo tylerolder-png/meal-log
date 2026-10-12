@@ -11,7 +11,7 @@ interface Props {
   progress: { checked: number; total: number };
   lastSectionUsed: Section;
   onToggle: (id: string) => void;
-  onEdit: (id: string, patch: { name: string; quantityText?: string; section: Section }) => void;
+  onEdit: (id: string, patch: { name: string; quantityText?: string; section: Section; storageNote?: string }) => void;
   onDelete: (id: string) => void;
   onAdd: (input: { name: string; quantityText?: string; section: Section }) => void;
   onSectionUsed: (section: Section) => void;

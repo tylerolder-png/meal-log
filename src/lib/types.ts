@@ -29,6 +29,8 @@ export interface GroceryItem {
   checked: boolean;
   /** Included in resetToStaples()'s default set. */
   staple: boolean;
+  /** Freeform handling/longevity tip, e.g. "Freeze if not cooking within 2 days". Shown under the quantity, not parsed. */
+  storageNote?: string;
 }
 
 /** A real number scales with servings; free text doesn't. */

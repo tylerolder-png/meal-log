@@ -4,7 +4,7 @@ import { SECTION_ORDER, type GroceryItem, type Section } from "../lib/types";
 interface Props {
   item: GroceryItem;
   onToggle: () => void;
-  onEdit: (patch: { name: string; quantityText?: string; section: Section }) => void;
+  onEdit: (patch: { name: string; quantityText?: string; section: Section; storageNote?: string }) => void;
   onDelete: () => void;
 }
 
@@ -13,17 +13,24 @@ export function GroceryItemRow({ item, onToggle, onEdit, onDelete }: Props) {
   const [name, setName] = useState(item.name);
   const [quantityText, setQuantityText] = useState(item.quantityText ?? "");
   const [section, setSection] = useState<Section>(item.section);
+  const [storageNote, setStorageNote] = useState(item.storageNote ?? "");
 
   function startEdit() {
     setName(item.name);
     setQuantityText(item.quantityText ?? "");
     setSection(item.section);
+    setStorageNote(item.storageNote ?? "");
     setEditing(true);
   }
 
   function save() {
     if (name.trim() === "") return;
-    onEdit({ name: name.trim(), quantityText: quantityText.trim() || undefined, section });
+    onEdit({
+      name: name.trim(),
+      quantityText: quantityText.trim() || undefined,
+      section,
+      storageNote: storageNote.trim() || undefined,
+    });
     setEditing(false);
   }
 
@@ -53,6 +60,12 @@ export function GroceryItemRow({ item, onToggle, onEdit, onDelete }: Props) {
             </option>
           ))}
         </select>
+        <input
+          className="grocery-item__edit-storage-note"
+          placeholder="Storage note (optional), e.g. freeze if not cooking soon"
+          value={storageNote}
+          onChange={(e) => setStorageNote(e.target.value)}
+        />
         <div className="grocery-item__edit-actions">
           <button type="button" className="grocery-item__save" onClick={save}>
             Save
@@ -83,6 +96,7 @@ export function GroceryItemRow({ item, onToggle, onEdit, onDelete }: Props) {
       <button type="button" className="grocery-item__label" onClick={startEdit}>
         <span className="grocery-item__name">{item.name}</span>
         {item.quantityText && <span className="grocery-item__qty">{item.quantityText}</span>}
+        {item.storageNote && <span className="grocery-item__storage-note">{item.storageNote}</span>}
       </button>
     </li>
   );

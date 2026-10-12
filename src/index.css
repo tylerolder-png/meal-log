@@ -231,6 +231,12 @@ button {
   color: var(--dim);
 }
 
+.grocery-item__storage-note {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
 .grocery-item--editing {
   flex-wrap: wrap;
   padding: 10px;
@@ -238,7 +244,8 @@ button {
 
 .grocery-item__edit-name,
 .grocery-item__edit-qty,
-.grocery-item__edit-section {
+.grocery-item__edit-section,
+.grocery-item__edit-storage-note {
   flex: 1 1 auto;
   min-width: 100px;
   min-height: var(--tap-min);
@@ -247,6 +254,10 @@ button {
   border: 1px solid var(--line);
   background: var(--panel-raised);
   color: var(--chalk);
+}
+
+.grocery-item__edit-storage-note {
+  flex: 1 1 100%;
 }
 
 .grocery-item__edit-actions {
