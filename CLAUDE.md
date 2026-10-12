@@ -165,12 +165,12 @@ passed.
   family pack, is a Cargill brand, and Cargill funds election-result
   disputers and has a mixed climate-pledge record, so it's skipped here.
   Trade a pack of convenience for that if you'd rather.
-- **Ground beef → Simple Truth Organic 90/10 Grass-Fed** (Kroger's own
-  organic line). Confirmed as an actual 3 lb pack at Kroger, and a store
-  brand has no comparable founder/CEO political exposure. It costs more than
-  conventional 90/10 and grass-fed has a leaner, slightly different flavor —
-  swap to plain Kroger-brand ground beef (also sold at 3 lb) if that
-  trade-off isn't worth it to you.
+- **Ground beef → Private Selection 90/10 Angus** (Kroger's own line, plain
+  conventional beef — not organic, not grass-fed). Confirmed as an actual
+  3 lb roll at Kroger, and a store brand has no comparable founder/CEO
+  political exposure. (An earlier pass here used Simple Truth Organic
+  90/10 Grass-Fed, also a real 3 lb Kroger pack, but at the organic/grass-fed
+  price premium — swapped out on request to skip that upcharge.)
 - **Protein shakes → Premier Protein** (BellRing Brands), **Core Power
   dropped**. Core Power's maker, Fairlife, is Coca-Cola-backed and was sued
   over undercover video of animal abuse at a supplier dairy; Coca-Cola and

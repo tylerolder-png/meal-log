@@ -79,7 +79,7 @@ an unbranded, generic ingredient name is better than a fabricated one.
   "prepMinutes": 10,
   "cookMinutes": 15,
   "ingredients": [
-    { "name": "Simple Truth Organic 90/10 Ground Beef", "quantity": { "amount": 3, "unit": "lb" }, "section": "Protein" },
+    { "name": "Private Selection 90/10 Angus Ground Beef", "quantity": { "amount": 3, "unit": "lb" }, "section": "Protein" },
     { "name": "Bulgogi sauce", "quantity": { "amount": 0.75, "unit": "cup" }, "section": "Pantry" },
     { "name": "Jasmine rice", "quantity": { "text": "cooked, to serve" }, "section": "Carbs/Bakery" },
     { "name": "Spinach", "quantity": { "amount": 14, "unit": "oz" }, "section": "Frozen" },

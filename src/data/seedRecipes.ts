@@ -66,7 +66,7 @@ export const SEED_RECIPES: Recipe[] = [
     cookMinutes: 15,
     isDefault: true,
     ingredients: [
-      { name: "Simple Truth Organic 90/10 Ground Beef", quantity: { amount: 3, unit: "lb" }, section: "Protein" },
+      { name: "Private Selection 90/10 Angus Ground Beef", quantity: { amount: 3, unit: "lb" }, section: "Protein" },
       { name: "Bulgogi sauce", quantity: { amount: 0.75, unit: "cup" }, section: "Pantry" },
       { name: "Jasmine rice or microwave rice cups", quantity: { text: "cooked, to serve" }, section: "Carbs/Bakery" },
       { name: "Spinach", quantity: { amount: 14, unit: "oz" }, section: "Frozen" },
@@ -139,7 +139,7 @@ export const SEED_RECIPES: Recipe[] = [
     isDefault: true,
     ingredients: [
       { name: "Barilla Protein+ pasta", quantity: { amount: 8, unit: "oz" }, section: "Carbs/Bakery" },
-      { name: "Simple Truth Organic 90/10 Ground Beef", quantity: { amount: 3, unit: "lb" }, section: "Protein" },
+      { name: "Private Selection 90/10 Angus Ground Beef", quantity: { amount: 3, unit: "lb" }, section: "Protein" },
       { name: "Kroger Marinara", quantity: { amount: 2, unit: "cups" }, section: "Pantry" },
       { name: "Spinach", quantity: { amount: 14, unit: "oz" }, section: "Frozen" },
     ],

@@ -27,7 +27,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
   },
   {
     id: "protein-beef",
-    name: "Simple Truth Organic 90/10 Ground Beef",
+    name: "Private Selection 90/10 Angus Ground Beef",
     quantityText: "3 lb pack",
     section: "Protein",
     checked: false,
