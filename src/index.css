@@ -46,6 +46,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* This app only ships a dark theme (see the design-direction note at the
+     top of this file) — color-scheme tells the browser so native controls
+     (select dropdowns, scrollbars) render dark instead of a jarring
+     light-mode default. It isn't a light/dark toggle. */
+  color-scheme: dark;
+}
+
 body {
   margin: 0;
   background: var(--night);
@@ -762,6 +770,7 @@ button {
 .recipe-form__quantity {
   flex: 1 1 100%;
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
@@ -770,7 +779,8 @@ button {
 }
 
 .recipe-form__quantity input {
-  flex: 1;
+  flex: 1 1 80px;
+  min-width: 0;
 }
 
 .recipe-form__remove-ingredient {
