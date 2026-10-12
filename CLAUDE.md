@@ -152,9 +152,11 @@ ground beef 90/10 ≈ 26g/100g, chicken breast/thigh ≈ 28-31g/100g, salmon ≈
 
 Dark ground (`--night`) because this gets read under bright, glary store
 lighting, not for style — high contrast matters more here than mood. One
-accent (`--accent`, a leaf green), spent in exactly two places: the grocery
-progress count and the primary action button. A second accent color is the
-fastest way to make this look generic — don't add one.
+accent (`--accent`, a leaf green), spent deliberately: the progress count,
+the primary action button, and a checked item's checkbox fill (a standard,
+expected state indicator, not decoration). It isn't sprinkled anywhere else —
+section headers, borders, and secondary buttons stay neutral. A second accent
+color is the fastest way to make this look generic — don't add one.
 
 Same three-font system as the sibling app, for the family resemblance:
 Barlow Condensed for the display numerals (progress count, servings number),
