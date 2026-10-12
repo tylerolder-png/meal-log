@@ -62,7 +62,7 @@ export function GroceryItemRow({ item, onToggle, onEdit, onDelete }: Props) {
         </select>
         <input
           className="grocery-item__edit-storage-note"
-          placeholder="Storage note (optional), e.g. freeze if not cooking soon"
+          placeholder="Tip (optional), e.g. freeze extras flat so they thaw faster"
           value={storageNote}
           onChange={(e) => setStorageNote(e.target.value)}
         />
@@ -96,7 +96,14 @@ export function GroceryItemRow({ item, onToggle, onEdit, onDelete }: Props) {
       <button type="button" className="grocery-item__label" onClick={startEdit}>
         <span className="grocery-item__name">{item.name}</span>
         {item.quantityText && <span className="grocery-item__qty">{item.quantityText}</span>}
-        {item.storageNote && <span className="grocery-item__storage-note">{item.storageNote}</span>}
+        {item.storageNote && (
+          <span className="grocery-item__storage-note">
+            <span className="grocery-item__storage-note-icon" aria-hidden="true">
+              💡
+            </span>
+            {item.storageNote}
+          </span>
+        )}
       </button>
     </li>
   );

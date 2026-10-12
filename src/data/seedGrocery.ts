@@ -10,9 +10,23 @@ import type { GroceryItem } from "../lib/types";
  * pick is summarized in CLAUDE.md under "Brand sourcing notes" — read that
  * before changing a brand here, since the reasoning (not just the name)
  * is the point.
+ *
+ * storageNote is an item-specific tip, not a generic warning — if the only
+ * thing worth saying is "fridge 1-2 days, then freeze," figure out the more
+ * useful, differentiated version of that (portioning, what to do with the
+ * leftover part, a real technique) rather than repeating the same line
+ * across every raw-meat item with the noun swapped out.
  */
 export const SEED_GROCERY_LIST: GroceryItem[] = [
-  { id: "produce-bananas", name: "Bananas", quantityText: "5-7", section: "Produce", checked: false, staple: true },
+  {
+    id: "produce-bananas",
+    name: "Bananas",
+    quantityText: "5-7",
+    section: "Produce",
+    checked: false,
+    staple: true,
+    storageNote: "Going brown? Peel and freeze them — ready for smoothies or banana bread.",
+  },
   { id: "produce-apples", name: "Apples or clementines", section: "Produce", checked: false, staple: true },
   { id: "produce-lemon", name: "Lemon", section: "Produce", checked: false, staple: true },
 
@@ -23,7 +37,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Keep refrigerated — good for 3-5 weeks from purchase.",
+    storageNote: "Not sure if one's still good? Drop it in water — sinks and lies flat means fresh.",
   },
   {
     id: "protein-turkey",
@@ -32,7 +46,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Ground poultry — fridge only 1-2 days. Freeze whatever you won't cook by then.",
+    storageNote: "Only cooking part of it tonight? Freeze the other trays flat, unopened — they thaw in under an hour.",
   },
   {
     id: "protein-beef",
@@ -41,7 +55,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Ground meat — fridge only 1-2 days. Freeze whatever you won't cook by then.",
+    storageNote: "Split into meal-size portions before freezing — easier to thaw just what you need, not all 3 lb.",
   },
   {
     id: "protein-chicken",
@@ -50,7 +64,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Raw poultry — fridge only 1-2 days. Freeze whatever you won't cook by then.",
+    storageNote: "Raw poultry keeps 1-2 days in the fridge — freeze what you won't cook by then.",
   },
   {
     id: "protein-salmon",
@@ -59,7 +73,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Keep frozen until the day you're cooking it — thaw in the fridge, not the counter.",
+    storageNote: "Thaw overnight in the fridge, not on the counter — safer, and the texture holds up better.",
   },
   {
     id: "protein-rotisserie",
@@ -68,7 +82,7 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Already cooked — fridge up to 3-4 days, or pull the meat and freeze it.",
+    storageNote: "Don't toss the carcass — simmer it with water and veggie scraps for a free batch of stock.",
   },
   {
     id: "protein-turkey-sausage",
@@ -77,13 +91,42 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
     section: "Protein",
     checked: false,
     staple: true,
-    storageNote: "Raw ground poultry — fridge only 1-2 days. Freeze whatever you won't cook by then.",
+    storageNote: "Freezing some? Lay them flat on a tray first so they don't fuse into one block in the bag.",
   },
 
-  { id: "dairy-yogurt", name: "Greek yogurt (Oikos Pro)", quantityText: "~7", section: "Dairy", checked: false, staple: true },
-  { id: "dairy-cottage-cheese", name: "Cottage cheese", section: "Dairy", checked: false, staple: true },
-  { id: "dairy-shredded-cheese", name: "Tillamook Shredded Cheese", section: "Dairy", checked: false, staple: true },
-  { id: "dairy-cream-cheese", name: "Kroger Cream Cheese", section: "Dairy", checked: false, staple: true },
+  {
+    id: "dairy-yogurt",
+    name: "Greek yogurt (Oikos Pro)",
+    quantityText: "~7",
+    section: "Dairy",
+    checked: false,
+    staple: true,
+    storageNote: "Liquid pooling on top is just whey — stir it back in, it hasn't gone bad.",
+  },
+  {
+    id: "dairy-cottage-cheese",
+    name: "Cottage cheese",
+    section: "Dairy",
+    checked: false,
+    staple: true,
+    storageNote: "Store the tub upside-down in the fridge once opened — slows spoilage, can add several days.",
+  },
+  {
+    id: "dairy-shredded-cheese",
+    name: "Tillamook Shredded Cheese",
+    section: "Dairy",
+    checked: false,
+    staple: true,
+    storageNote: "Squeeze the air out of the bag before resealing — less oxygen means slower mold growth.",
+  },
+  {
+    id: "dairy-cream-cheese",
+    name: "Kroger Cream Cheese",
+    section: "Dairy",
+    checked: false,
+    staple: true,
+    storageNote: "Not going to finish the block? It freezes fine for baking — texture gets grainy for spreading, though.",
+  },
   { id: "dairy-oj", name: "Florida's Natural Orange Juice", section: "Dairy", checked: false, staple: true },
 
   { id: "frozen-broccoli", name: "Broccoli", section: "Frozen", checked: false, staple: true },
@@ -97,10 +140,31 @@ export const SEED_GROCERY_LIST: GroceryItem[] = [
   { id: "grab-jerky", name: "Chomps Beef Sticks", section: "Grab-and-go", checked: false, staple: true },
   { id: "grab-string-cheese", name: "String cheese", section: "Grab-and-go", checked: false, staple: true },
 
-  { id: "carbs-bagels", name: "Cinnamon raisin bagels", section: "Carbs/Bakery", checked: false, staple: true },
-  { id: "carbs-rice", name: "Jasmine rice or microwave rice cups", section: "Carbs/Bakery", checked: false, staple: true },
+  {
+    id: "carbs-bagels",
+    name: "Cinnamon raisin bagels",
+    section: "Carbs/Bakery",
+    checked: false,
+    staple: true,
+    storageNote: "Won't eat them all in 4-5 days? Freeze the rest — they toast fine straight from frozen.",
+  },
+  {
+    id: "carbs-rice",
+    name: "Jasmine rice or microwave rice cups",
+    section: "Carbs/Bakery",
+    checked: false,
+    staple: true,
+    storageNote: "Cool cooked rice within an hour before refrigerating — left out too long, it's a real food-poisoning risk.",
+  },
   { id: "carbs-protein-pasta", name: "Barilla Protein+ pasta", section: "Carbs/Bakery", checked: false, staple: true },
-  { id: "carbs-tortillas", name: "Kroger Tortillas", section: "Carbs/Bakery", checked: false, staple: true },
+  {
+    id: "carbs-tortillas",
+    name: "Kroger Tortillas",
+    section: "Carbs/Bakery",
+    checked: false,
+    staple: true,
+    storageNote: "Freeze extras — a damp paper towel and 20 seconds in the microwave brings one back soft.",
+  },
 
   { id: "pantry-black-beans", name: "Bush's Black Beans", quantityText: "2-3 cans", section: "Pantry", checked: false, staple: true },
   { id: "pantry-taco-seasoning", name: "Taco seasoning", section: "Pantry", checked: false, staple: true },

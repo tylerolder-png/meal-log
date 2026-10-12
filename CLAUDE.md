@@ -69,7 +69,7 @@ export interface GroceryItem {
   section: Section;
   checked: boolean;
   staple: boolean;
-  storageNote?: string;    // handling/longevity tip, e.g. "freeze if not cooking within 2 days"
+  storageNote?: string;    // a specific, useful tip, not a generic warning -- see data/seedGrocery.ts's header comment
 }
 
 export type Quantity = { amount: number; unit: string } | { text: string };
