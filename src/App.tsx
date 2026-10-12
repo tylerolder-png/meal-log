@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRegisterSW } from "virtual:pwa-register/react";
 import { GroceryTab } from "./components/GroceryTab";
 import { RecipesTab } from "./components/RecipesTab";
 import { SettingsTab } from "./components/SettingsTab";
@@ -16,6 +17,10 @@ export default function App() {
   const { settings, updateSettings } = useSettings();
   const [tab, setTab] = useState<Tab>("grocery");
   const [toast, setToast] = useState("");
+  const {
+    needRefresh: [needRefresh],
+    updateServiceWorker,
+  } = useRegisterSW();
 
   function flash(message: string) {
     setToast(message);
@@ -77,7 +82,19 @@ export default function App() {
 
       <TabBar tab={tab} onChange={setTab} />
 
-      <div className="toast-stack">{toast && <p className="toast" role="status">{toast}</p>}</div>
+      <div className="toast-stack">
+        {toast && (
+          <p className="toast" role="status">
+            {toast}
+          </p>
+        )}
+
+        {needRefresh && (
+          <button type="button" className="toast toast--update" onClick={() => updateServiceWorker(true)}>
+            Update available &mdash; tap to refresh
+          </button>
+        )}
+      </div>
     </div>
   );
 }

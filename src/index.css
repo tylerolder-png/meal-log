@@ -379,6 +379,13 @@ button {
   font-size: 0.9rem;
 }
 
+.toast--update {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+  pointer-events: auto;
+}
+
 /* ---------- shared: tag chips ---------- */
 .tag-chip {
   display: inline-flex;
