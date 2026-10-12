@@ -235,10 +235,13 @@ passed.
 Dark ground (`--night`) because this gets read under bright, glary store
 lighting, not for style — high contrast matters more here than mood. One
 accent (`--accent`, a leaf green), spent deliberately: the progress count,
-the primary action button, and a checked item's checkbox fill (a standard,
-expected state indicator, not decoration). It isn't sprinkled anywhere else —
-section headers, borders, and secondary buttons stay neutral. A second accent
-color is the fastest way to make this look generic — don't add one.
+the primary action button, a checked item's checkbox fill (a standard,
+expected state indicator, not decoration), and a storage-note tip's border.
+That last one bends "scarce" on purpose — tips were reported genuinely hard
+to see twice in a row (muted text, then dim text), so legibility won out
+over restraint. It still isn't sprinkled as pure decoration — every use
+marks something the user is meant to act on. A second accent color is the
+fastest way to make this look generic — don't add one.
 
 Same three-font system as the sibling app, for the family resemblance:
 Barlow Condensed for the display numerals (progress count, servings number),
