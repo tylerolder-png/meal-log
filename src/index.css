@@ -204,9 +204,10 @@ button {
 .grocery-item__label {
   flex: 1;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
   min-height: var(--tap-min);
   background: none;
   border: none;
@@ -228,7 +229,6 @@ button {
   font-family: var(--mono);
   font-size: 0.85rem;
   color: var(--dim);
-  white-space: nowrap;
 }
 
 .grocery-item--editing {
@@ -593,8 +593,8 @@ button {
 
 .recipe-detail__ingredient {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  gap: 2px;
   padding: 8px 10px;
   background: var(--panel);
   border-radius: var(--radius-sm);
@@ -603,7 +603,6 @@ button {
 .recipe-detail__ingredient-qty {
   font-family: var(--mono);
   color: var(--dim);
-  white-space: nowrap;
 }
 
 .recipe-detail__steps {
