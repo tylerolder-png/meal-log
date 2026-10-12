@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import type { NewRecipe } from "../lib/recipes";
 import { RECIPE_TAGS, type Recipe, type RecipeTag } from "../lib/types";
+import { PasteRecipePanel } from "./PasteRecipePanel";
 import { RecipeCard } from "./RecipeCard";
 import { RecipeDetail } from "./RecipeDetail";
 import { RecipeForm } from "./RecipeForm";
 
-type View = { mode: "list" } | { mode: "detail"; id: string } | { mode: "create" } | { mode: "edit"; id: string };
+type View =
+  | { mode: "list" }
+  | { mode: "detail"; id: string }
+  /** `draft` is set when arriving from a parsed paste — prefills the form for review. */
+  | { mode: "create"; draft?: NewRecipe }
+  | { mode: "edit"; id: string }
+  | { mode: "paste" };
 
 interface Props {
   recipes: Recipe[];
@@ -32,9 +39,20 @@ export function RecipesTab({ recipes, onAdd, onEdit, onDelete, onAddIngredients 
   const activeRecipe =
     view.mode === "detail" || view.mode === "edit" ? recipes.find((r) => r.id === view.id) : undefined;
 
+  if (view.mode === "paste") {
+    return (
+      <PasteRecipePanel
+        onParsed={(draft) => setView({ mode: "create", draft })}
+        onCancel={() => setView({ mode: "list" })}
+      />
+    );
+  }
+
   if (view.mode === "create") {
     return (
       <RecipeForm
+        initial={view.draft}
+        title={view.draft ? "Review parsed recipe" : "New recipe"}
         onSave={(input) => {
           onAdd(input);
           setView({ mode: "list" });
@@ -48,6 +66,7 @@ export function RecipesTab({ recipes, onAdd, onEdit, onDelete, onAddIngredients 
     return (
       <RecipeForm
         initial={activeRecipe}
+        title="Edit recipe"
         onSave={(input) => {
           onEdit(activeRecipe.id, input);
           setView({ mode: "detail", id: activeRecipe.id });
@@ -78,9 +97,14 @@ export function RecipesTab({ recipes, onAdd, onEdit, onDelete, onAddIngredients 
     <div className="recipes">
       <header className="recipes__header">
         <h1 className="recipes__title">Recipes</h1>
-        <button type="button" className="recipes__new" onClick={() => setView({ mode: "create" })}>
-          New recipe
-        </button>
+        <div className="recipes__header-actions">
+          <button type="button" className="recipes__paste" onClick={() => setView({ mode: "paste" })}>
+            Paste a recipe
+          </button>
+          <button type="button" className="recipes__new" onClick={() => setView({ mode: "create" })}>
+            New recipe
+          </button>
+        </div>
       </header>
 
       <div className="recipes__filters">

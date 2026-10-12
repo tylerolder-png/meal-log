@@ -1,9 +1,20 @@
 import { useMemo, useState } from "react";
 import { quantityToText } from "../lib/groceryMerge";
 import { scaleRecipe } from "../lib/scaling";
-import type { Recipe } from "../lib/types";
+import type { Recipe, RecipeIngredient } from "../lib/types";
 import { useWakeLock } from "../hooks/useWakeLock";
 import { ServingsScaler } from "./ServingsScaler";
+
+/** Groups ingredients by their optional prep-step `group`, preserving first-seen order. Ungrouped items keep their original (undefined) key, rendered with no heading. */
+function groupIngredients(ingredients: RecipeIngredient[]): Map<string | undefined, RecipeIngredient[]> {
+  const groups = new Map<string | undefined, RecipeIngredient[]>();
+  for (const ingredient of ingredients) {
+    const list = groups.get(ingredient.group);
+    if (list) list.push(ingredient);
+    else groups.set(ingredient.group, [ingredient]);
+  }
+  return groups;
+}
 
 interface Props {
   recipe: Recipe;
@@ -20,6 +31,7 @@ export function RecipeDetail({ recipe, onBack, onAddIngredients, onEdit, onDelet
   const wakeLock = useWakeLock();
 
   const scaled = useMemo(() => scaleRecipe(recipe, viewServings), [recipe, viewServings]);
+  const ingredientGroups = useMemo(() => groupIngredients(scaled.ingredients), [scaled.ingredients]);
 
   return (
     <div className={`recipe-detail ${largeText ? "recipe-detail--large-text" : ""}`}>
@@ -72,14 +84,19 @@ export function RecipeDetail({ recipe, onBack, onAddIngredients, onEdit, onDelet
 
       <section className="recipe-detail__section">
         <h2 className="recipe-detail__section-title">Ingredients</h2>
-        <ul className="recipe-detail__ingredients">
-          {scaled.ingredients.map((ingredient, i) => (
-            <li key={i} className="recipe-detail__ingredient">
-              <span>{ingredient.name}</span>
-              <span className="recipe-detail__ingredient-qty">{quantityToText(ingredient.quantity)}</span>
-            </li>
-          ))}
-        </ul>
+        {[...ingredientGroups.entries()].map(([group, items]) => (
+          <div key={group ?? "_ungrouped"} className="recipe-detail__ingredient-group">
+            {group && <h3 className="recipe-detail__group-title">{group}</h3>}
+            <ul className="recipe-detail__ingredients">
+              {items.map((ingredient, i) => (
+                <li key={i} className="recipe-detail__ingredient">
+                  <span>{ingredient.name}</span>
+                  <span className="recipe-detail__ingredient-qty">{quantityToText(ingredient.quantity)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </section>
 
       <section className="recipe-detail__section">

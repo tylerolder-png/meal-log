@@ -33,15 +33,17 @@ src/
     groceryList.ts          add/edit/delete/toggle, "new trip", "reset to staples", section sort
     groceryMerge.ts         normalizeName() + mergeIngredientsIntoList() — recipe → list dedupe
     scaling.ts              scaleRecipe(recipe, servings) — scales amount+unit quantities only
-    recipes.ts              create/edit/delete, restoreDefaults() merge rule
+    recipes.ts              create/edit/delete, restoreDefaults() merge rule, importRecipes() upsert-by-id
     recipeValidation.ts     hand-rolled JSON validation for pasted recipes (no schema library)
+    recipeTextParser.ts     heuristic offline parser for a pasted recipe — no AI, no network call
     backup.ts                buildBackup / parseBackup for full export/import
   data/
     seedGrocery.ts           default staples
     seedRecipes.ts           default recipes
   hooks/
-    useGroceryList.ts, useRecipes.ts, useSettings.ts   the only places state and persistence connect
+    useGroceryList.ts, useRecipes.ts, useSettings.ts, useWakeLock.ts   the only places state and persistence connect
   components/                presentational, driven by props
+    PasteRecipePanel.tsx     paste text -> recipeTextParser -> prefills RecipeForm for review
 ```
 
 **The `lib/` boundary is the important one.** Anything that decides what the
@@ -75,6 +77,7 @@ export interface RecipeIngredient {
   name: string;
   quantity: Quantity;
   section: Section;         // authored explicitly, not guessed from the name
+  group?: string;           // prep-step display grouping ("Sauce", "Marinade") — NOT the grocery section
 }
 
 export type RecipeTag = "breakfast" | "dinner" | "snack" | "batch-cook";
@@ -123,6 +126,20 @@ full example — that's the file to hand to an LLM asked to write a new recipe.
 - **Storage is one seam.** Every read/write goes through `storage.ts`'s
   `MealLogStore` interface. Swapping in sync later means implementing that
   interface, not touching a component or hook.
+- **`group` and `section` are different axes, don't conflate them.** `section`
+  is where an ingredient lives in the grocery store (drives list sorting and
+  merge target); `group` is where it lives in the *recipe* ("Sauce",
+  "Marinade", "Bowl") for display only. A sauce's soy sauce (Pantry section)
+  and garlic (Produce section) can share one group. `group` is never read by
+  `groceryMerge.ts` or `groceryList.ts` — only `RecipeDetail`'s rendering and
+  `recipeTextParser.ts`'s "For the X:" sub-header detection touch it.
+- **`recipeTextParser.ts` never throws and never saves anything by itself.**
+  It always returns a best-effort `NewRecipe`, including an empty one for
+  blank input — the caller (`PasteRecipePanel` → `RecipeForm`) always shows
+  it for review before `onAdd` is called. Every parsed ingredient's `section`
+  defaults to `"Other"`, on purpose — section can't be inferred from text
+  alone, and guessing wrong would be worse than an obvious placeholder the
+  user has to fix anyway.
 - **A staple's `name` in `seedGrocery.ts` and the matching ingredient's
   `name` in `seedRecipes.ts` must be character-identical** (after
   `normalizeName()`'s trim/lowercase/whitespace-collapse). That's what lets
@@ -144,7 +161,8 @@ face value.
 
 Reference cooked-protein densities used: ground turkey 93/7 ≈ 24g/100g,
 ground beef 90/10 ≈ 26g/100g, chicken breast/thigh ≈ 28-31g/100g, salmon ≈
-20-23g/100g, Barilla Protein+ ≈ 10g per 2oz dry serving.
+20-23g/100g, Barilla Protein+ ≈ 10g per 2oz dry serving, jasmine rice cooked
+≈ 2.7g/100g (~4g per cooked cup).
 
 ## Brand sourcing notes
 
@@ -238,3 +256,10 @@ alignment). Bottom tab bar (`<nav role="tablist">`), safe-area padding via
   restriction) — installing from an iPhone requires Safari specifically.
 - `proteinPerServingG` is an estimate (see "Nutrition numbers" above), not a
   substitute for a food scale and a real nutrition tracker.
+- `recipeTextParser.ts` is pattern-matching, not understanding. It handles
+  recipes with a clear "Ingredients"/"Instructions" structure and "For the
+  X:" sub-headers well; it does much worse on prose-style recipes with no
+  structure, or ones where steps come before ingredients. The JSON-paste path
+  in Settings (ask Claude in chat, paste the JSON) remains the more reliable
+  option for messy text — the two are complementary, not a replacement for
+  each other.

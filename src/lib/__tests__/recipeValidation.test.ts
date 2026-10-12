@@ -29,6 +29,20 @@ describe("parseRecipeImport", () => {
     expect(result[0]!.ingredients[0]!.quantity).toEqual({ text: "to taste" });
   });
 
+  it("accepts an optional group on an ingredient", () => {
+    const withGroup = {
+      ...valid,
+      ingredients: [{ name: "Soy sauce", quantity: { text: "2 tbsp" }, section: "Pantry", group: "Sauce" }],
+    };
+    const result = parseRecipeImport(JSON.stringify(withGroup));
+    expect(result[0]!.ingredients[0]!.group).toBe("Sauce");
+  });
+
+  it("leaves group undefined when absent", () => {
+    const result = parseRecipeImport(JSON.stringify(valid));
+    expect(result[0]!.ingredients[0]!.group).toBeUndefined();
+  });
+
   it("rejects invalid JSON with a readable message", () => {
     expect(() => parseRecipeImport("{not json")).toThrow(/valid JSON/);
   });

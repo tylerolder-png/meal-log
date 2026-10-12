@@ -39,6 +39,13 @@ export interface RecipeIngredient {
   quantity: Quantity;
   /** Authored explicitly rather than guessed from the ingredient name. */
   section: Section;
+  /**
+   * Prep-step grouping for display (e.g. "Sauce", "Marinade", "Bowl") — not
+   * the grocery-store section. A sauce's soy sauce (Pantry) and garlic
+   * (Produce) are different sections but the same group. Omit for a flat,
+   * ungrouped ingredient list.
+   */
+  group?: string;
 }
 
 export type RecipeTag = "breakfast" | "dinner" | "snack" | "batch-cook";

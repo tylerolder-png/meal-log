@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type { NewRecipe } from "../lib/recipes";
-import { RECIPE_TAGS, SECTION_ORDER, type Recipe, type RecipeTag, type Section } from "../lib/types";
+import { RECIPE_TAGS, SECTION_ORDER, type RecipeIngredient, type RecipeTag, type Section } from "../lib/types";
 
 interface IngredientDraft {
   name: string;
@@ -9,9 +9,11 @@ interface IngredientDraft {
   unit: string;
   text: string;
   section: Section;
+  group: string;
 }
 
-function toDraft(ingredient: Recipe["ingredients"][number]): IngredientDraft {
+function toDraft(ingredient: RecipeIngredient): IngredientDraft {
+  const group = ingredient.group ?? "";
   if ("amount" in ingredient.quantity) {
     return {
       name: ingredient.name,
@@ -20,6 +22,7 @@ function toDraft(ingredient: Recipe["ingredients"][number]): IngredientDraft {
       unit: ingredient.quantity.unit,
       text: "",
       section: ingredient.section,
+      group,
     };
   }
   return {
@@ -29,6 +32,7 @@ function toDraft(ingredient: Recipe["ingredients"][number]): IngredientDraft {
     unit: "",
     text: ingredient.quantity.text,
     section: ingredient.section,
+    group,
   };
 }
 
@@ -39,15 +43,19 @@ const EMPTY_INGREDIENT: IngredientDraft = {
   unit: "",
   text: "",
   section: "Other",
+  group: "",
 };
 
 interface Props {
-  initial?: Recipe;
+  /** A full saved Recipe (editing) or a parser/draft NewRecipe (reviewing a pasted recipe) — both work, id/isDefault are simply ignored. */
+  initial?: NewRecipe;
+  /** Caller states the heading explicitly — "has initial data" doesn't by itself mean "editing an existing recipe" (a parsed-but-unsaved draft also has initial data). */
+  title: string;
   onSave: (input: NewRecipe) => void;
   onCancel: () => void;
 }
 
-export function RecipeForm({ initial, onSave, onCancel }: Props) {
+export function RecipeForm({ initial, title, onSave, onCancel }: Props) {
   const [name, setName] = useState(initial?.name ?? "");
   const [tags, setTags] = useState<Set<RecipeTag>>(new Set(initial?.tags ?? []));
   const [servings, setServings] = useState(String(initial?.servings ?? 2));
@@ -119,6 +127,7 @@ export function RecipeForm({ initial, onSave, onCancel }: Props) {
           ing.quantityKind === "amount"
             ? { amount: Number(ing.amount), unit: ing.unit.trim() }
             : { text: ing.text.trim() },
+        group: ing.group.trim() === "" ? undefined : ing.group.trim(),
       })),
       steps,
       notes: notes.trim() === "" ? undefined : notes.trim(),
@@ -127,7 +136,7 @@ export function RecipeForm({ initial, onSave, onCancel }: Props) {
 
   return (
     <form className="recipe-form" onSubmit={handleSubmit}>
-      <h1 className="recipe-form__title">{initial ? "Edit recipe" : "New recipe"}</h1>
+      <h1 className="recipe-form__title">{title}</h1>
 
       {error && <p className="recipe-form__error">{error}</p>}
 
@@ -180,6 +189,12 @@ export function RecipeForm({ initial, onSave, onCancel }: Props) {
             placeholder="Ingredient name"
             value={ing.name}
             onChange={(e) => updateIngredient(i, { name: e.target.value })}
+          />
+          <input
+            className="recipe-form__ingredient-group"
+            placeholder="Group (optional, e.g. Sauce)"
+            value={ing.group}
+            onChange={(e) => updateIngredient(i, { group: e.target.value })}
           />
           <select
             className="recipe-form__ingredient-section"

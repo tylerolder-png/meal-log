@@ -426,8 +426,8 @@ button {
 
 .recipes__header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 12px;
 }
 
@@ -438,14 +438,30 @@ button {
   margin: 0;
 }
 
+.recipes__header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.recipes__paste,
 .recipes__new {
+  flex: 1;
   min-height: var(--tap-min);
   padding: 0 14px;
-  border: none;
   border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.recipes__paste {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--chalk);
+}
+
+.recipes__new {
+  border: none;
   background: var(--accent);
   color: var(--night);
-  font-weight: 600;
 }
 
 .recipes__filters {
@@ -580,6 +596,23 @@ button {
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 8px;
+}
+
+.recipe-detail__ingredient-group {
+  margin-top: 12px;
+}
+
+.recipe-detail__ingredient-group:first-child {
+  margin-top: 0;
+}
+
+.recipe-detail__group-title {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--dim);
+  text-transform: capitalize;
+  margin: 0 0 4px;
 }
 
 .recipe-detail__ingredients {
@@ -762,6 +795,11 @@ button {
   flex: 1 1 100%;
 }
 
+.recipe-form__ingredient-group {
+  flex: 1 1 100%;
+  font-size: 0.85rem;
+}
+
 .recipe-form__ingredient-section {
   flex: 1 1 auto;
 }
@@ -820,6 +858,67 @@ button {
 }
 
 .recipe-form__cancel {
+  background: var(--panel);
+  color: var(--chalk);
+  border: 1px solid var(--line);
+}
+
+/* ---------- paste a recipe ---------- */
+.paste-recipe {
+  padding: 16px;
+  padding-top: calc(16px + env(safe-area-inset-top));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.paste-recipe__title {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.paste-recipe__hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.paste-recipe__textarea {
+  min-height: 260px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--chalk);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.paste-recipe__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.paste-recipe__parse,
+.paste-recipe__cancel {
+  flex: 1;
+  min-height: var(--tap-min);
+  border-radius: var(--radius);
+}
+
+.paste-recipe__parse {
+  border: none;
+  background: var(--accent);
+  color: var(--night);
+  font-weight: 600;
+}
+
+.paste-recipe__parse:disabled {
+  opacity: 0.5;
+}
+
+.paste-recipe__cancel {
   background: var(--panel);
   color: var(--chalk);
   border: 1px solid var(--line);

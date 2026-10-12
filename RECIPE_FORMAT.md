@@ -21,6 +21,7 @@ A single recipe:
     quantity: { amount: number; unit: string } | { text: string };
     section: "Produce" | "Protein" | "Dairy" | "Frozen" |
              "Grab-and-go" | "Carbs/Bakery" | "Pantry" | "Other";
+    group?: string;        // prep-step display grouping, e.g. "Sauce", "Marinade" — NOT the section above
   }>;
   steps: string[];          // short, numbered-by-array-order, imperative
   notes?: string;
@@ -32,9 +33,14 @@ several at once.
 
 Use `{ "amount": number, "unit": string }` whenever a quantity has a real
 number (e.g. `{ "amount": 2, "unit": "lb" }`). Fall back to `{ "text": "..." }`
-only when there isn't a sensible number (e.g. `{ "text": "to taste" }` or
-`{ "text": "cooked, to serve" }`) — text quantities don't scale when servings
-change, so prefer a real number whenever one exists.
+only when there isn't a sensible number (e.g. `{ "text": "to taste" }`) —
+text quantities don't scale when servings change, so prefer a real number
+whenever one exists.
+
+`group` is optional and purely cosmetic — it clusters ingredients under a
+sub-heading in the app (e.g. all the sauce ingredients together, separate
+from the bowl ingredients), independent of which grocery `section` each one
+belongs to. Leave it out for a flat ingredient list.
 
 ## Nutrition numbers
 
@@ -52,6 +58,7 @@ densities to use:
 | Barilla Protein+ pasta | 10g / 2oz dry serving |
 | Black beans (canned) | ~14g / cup drained |
 | Greek yogurt (Oikos Pro style) | ~20g / cup |
+| Jasmine rice, cooked | ~2.7g / 100g (~4g / cooked cup) |
 
 Treat the result as a planning estimate, not a lab-verified number — say so
 if asked, don't present it as precise.
@@ -75,15 +82,15 @@ an unbranded, generic ingredient name is better than a fabricated one.
   "name": "Bulgogi Beef Bowl",
   "tags": ["dinner", "batch-cook"],
   "servings": 4,
-  "proteinPerServingG": 68,
+  "proteinPerServingG": 72,
   "prepMinutes": 10,
   "cookMinutes": 15,
   "ingredients": [
-    { "name": "Private Selection 90/10 Angus Ground Beef", "quantity": { "amount": 3, "unit": "lb" }, "section": "Protein" },
-    { "name": "Bulgogi sauce", "quantity": { "amount": 0.75, "unit": "cup" }, "section": "Pantry" },
-    { "name": "Jasmine rice", "quantity": { "text": "cooked, to serve" }, "section": "Carbs/Bakery" },
-    { "name": "Spinach", "quantity": { "amount": 14, "unit": "oz" }, "section": "Frozen" },
-    { "name": "Edamame", "quantity": { "amount": 1.5, "unit": "cups" }, "section": "Frozen" }
+    { "name": "Private Selection 90/10 Angus Ground Beef", "quantity": { "amount": 3, "unit": "lb" }, "section": "Protein", "group": "Beef" },
+    { "name": "Bulgogi sauce", "quantity": { "amount": 0.75, "unit": "cup" }, "section": "Pantry", "group": "Beef" },
+    { "name": "Jasmine rice or microwave rice cups", "quantity": { "amount": 3, "unit": "cups, cooked" }, "section": "Carbs/Bakery", "group": "Bowl" },
+    { "name": "Spinach", "quantity": { "amount": 14, "unit": "oz" }, "section": "Frozen", "group": "Bowl" },
+    { "name": "Edamame", "quantity": { "amount": 1.5, "unit": "cups" }, "section": "Frozen", "group": "Bowl" }
   ],
   "steps": [
     "Brown beef in a hot pan over medium-high, breaking it up, 7-9 min, until no pink remains (internal temp 160°F).",

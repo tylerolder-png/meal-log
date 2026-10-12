@@ -99,10 +99,14 @@ function validateIngredient(candidate: unknown, recipeLabel: string, index: numb
   if (!isAmountUnit && !isText) {
     throw new Error(`${at}.quantity must be { amount: number, unit: string } or { text: string }.`);
   }
+  if (i.group !== undefined && typeof i.group !== "string") {
+    throw new Error(`${at}.group must be a string if present.`);
+  }
 
   return {
     name: i.name,
     section: i.section as RecipeIngredient["section"],
     quantity: isAmountUnit ? { amount: q.amount as number, unit: q.unit as string } : { text: q.text as string },
+    group: i.group as string | undefined,
   };
 }
