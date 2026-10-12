@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GroceryTab } from "./components/GroceryTab";
 import { RecipesTab } from "./components/RecipesTab";
+import { SettingsTab } from "./components/SettingsTab";
 import { TabBar, type Tab } from "./components/TabBar";
 import { useGroceryList } from "./hooks/useGroceryList";
 import { useRecipes } from "./hooks/useRecipes";
@@ -60,9 +61,18 @@ export default function App() {
       )}
 
       {tab === "settings" && (
-        <div className="recipes">
-          <p className="empty">Settings land in the next step.</p>
-        </div>
+        <SettingsTab
+          groceryList={grocery.items}
+          recipes={recipes.recipes}
+          settings={settings}
+          onImportRecipes={recipes.importRecipes}
+          onImportBackup={(backup) => {
+            grocery.replaceAll(backup.groceryList);
+            recipes.replaceAll(backup.recipes);
+            updateSettings(backup.settings);
+          }}
+          onRestoreDefaults={recipes.restoreDefaults}
+        />
       )}
 
       <TabBar tab={tab} onChange={setTab} />

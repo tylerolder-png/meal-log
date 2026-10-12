@@ -24,3 +24,18 @@ export function restoreDefaults(list: Recipe[], seedRecipes: Recipe[]): Recipe[]
   const missing = seedRecipes.filter((seed) => !presentIds.has(seed.id));
   return [...list, ...missing];
 }
+
+/**
+ * Applies validated, imported recipes: a recipe whose id already exists in
+ * the list replaces it in place — re-pasting an edited version of a recipe
+ * you already have is how you update it. A new id is appended.
+ */
+export function importRecipes(list: Recipe[], parsed: Recipe[]): Recipe[] {
+  let next = list;
+  for (const recipe of parsed) {
+    next = next.some((r) => r.id === recipe.id)
+      ? next.map((r) => (r.id === recipe.id ? recipe : r))
+      : [...next, recipe];
+  }
+  return next;
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addRecipe, deleteRecipe, editRecipe, restoreDefaults } from "../recipes";
+import { addRecipe, deleteRecipe, editRecipe, importRecipes, restoreDefaults } from "../recipes";
 import type { Recipe } from "../types";
 
 function recipe(overrides: Partial<Recipe>): Recipe {
@@ -58,5 +58,24 @@ describe("restoreDefaults", () => {
     const result = restoreDefaults([custom], seeds);
     expect(result.find((r) => r.id === "custom-1")).toEqual(custom);
     expect(result).toHaveLength(3);
+  });
+});
+
+describe("importRecipes", () => {
+  it("appends a recipe with a new id", () => {
+    const result = importRecipes([recipe({ id: "existing" })], [recipe({ id: "new-one", name: "New" })]);
+    expect(result.map((r) => r.id)).toEqual(["existing", "new-one"]);
+  });
+
+  it("replaces a recipe in place when the id already exists, preserving position", () => {
+    const list = [recipe({ id: "a", name: "A" }), recipe({ id: "b", name: "B" })];
+    const result = importRecipes(list, [recipe({ id: "a", name: "A updated" })]);
+    expect(result.map((r) => r.name)).toEqual(["A updated", "B"]);
+  });
+
+  it("handles a mix of new and replaced recipes in one import", () => {
+    const list = [recipe({ id: "a", name: "A" })];
+    const result = importRecipes(list, [recipe({ id: "a", name: "A updated" }), recipe({ id: "c", name: "C" })]);
+    expect(result.map((r) => r.name)).toEqual(["A updated", "C"]);
   });
 });

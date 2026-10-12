@@ -43,6 +43,11 @@ export function useRecipes(store: MealLogStore = localStore) {
     () => apply((prev) => recipesLib.restoreDefaults(prev, SEED_RECIPES)),
     [apply],
   );
+  const importRecipes = useCallback(
+    (parsed: Recipe[]) => apply((prev) => recipesLib.importRecipes(prev, parsed)),
+    [apply],
+  );
+  const replaceAll = useCallback((next: Recipe[]) => apply(() => next), [apply]);
 
-  return { ready, recipes, addRecipe, editRecipe, deleteRecipe, restoreDefaults };
+  return { ready, recipes, addRecipe, editRecipe, deleteRecipe, restoreDefaults, importRecipes, replaceAll };
 }

@@ -47,6 +47,7 @@ export function useGroceryList(store: MealLogStore = localStore) {
     (ingredients: RecipeIngredient[]) => apply((prev) => mergeIngredientsIntoList(prev, ingredients)),
     [apply],
   );
+  const replaceAll = useCallback((next: GroceryItem[]) => apply(() => next), [apply]);
 
   const sorted = useMemo(() => groceryList.sortForDisplay(items), [items]);
   const progress = useMemo(() => groceryList.progressCount(items), [items]);
@@ -62,5 +63,6 @@ export function useGroceryList(store: MealLogStore = localStore) {
     newTrip,
     resetToStaples,
     addIngredients,
+    replaceAll,
   };
 }
