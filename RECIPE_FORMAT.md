@@ -56,6 +56,17 @@ densities to use:
 Treat the result as a planning estimate, not a lab-verified number — say so
 if asked, don't present it as precise.
 
+## Brand names
+
+If an ingredient names a brand, use the ones already picked in
+`CLAUDE.md`'s "Brand sourcing notes" (e.g. ground beef is "Simple Truth
+Organic 90/10 Ground Beef", not a generic "ground beef") — that keeps the
+grocery-list dedupe working, since it matches on exact ingredient name. If a
+new brand is genuinely needed, the screening criteria are: a real Kroger
+package size, and no heavy partisan political spending or notable bad
+corporate-conduct history. Don't invent a brand claim without checking it —
+an unbranded, generic ingredient name is better than a fabricated one.
+
 ## Full example
 
 ```json
@@ -63,23 +74,23 @@ if asked, don't present it as precise.
   "id": "bulgogi-beef-bowl",
   "name": "Bulgogi Beef Bowl",
   "tags": ["dinner", "batch-cook"],
-  "servings": 3,
-  "proteinPerServingG": 62,
+  "servings": 4,
+  "proteinPerServingG": 68,
   "prepMinutes": 10,
   "cookMinutes": 15,
   "ingredients": [
-    { "name": "Lean ground beef 90/10", "quantity": { "amount": 2, "unit": "lb" }, "section": "Protein" },
-    { "name": "Bulgogi sauce", "quantity": { "amount": 0.5, "unit": "cup" }, "section": "Pantry" },
+    { "name": "Simple Truth Organic 90/10 Ground Beef", "quantity": { "amount": 3, "unit": "lb" }, "section": "Protein" },
+    { "name": "Bulgogi sauce", "quantity": { "amount": 0.75, "unit": "cup" }, "section": "Pantry" },
     { "name": "Jasmine rice", "quantity": { "text": "cooked, to serve" }, "section": "Carbs/Bakery" },
-    { "name": "Frozen spinach", "quantity": { "amount": 10, "unit": "oz" }, "section": "Frozen" },
-    { "name": "Edamame", "quantity": { "amount": 1, "unit": "cup" }, "section": "Frozen" }
+    { "name": "Spinach", "quantity": { "amount": 14, "unit": "oz" }, "section": "Frozen" },
+    { "name": "Edamame", "quantity": { "amount": 1.5, "unit": "cups" }, "section": "Frozen" }
   ],
   "steps": [
-    "Brown beef in a hot pan over medium-high, breaking it up, 5-6 min, until no pink remains (internal temp 160°F).",
+    "Brown beef in a hot pan over medium-high, breaking it up, 7-9 min, until no pink remains (internal temp 160°F).",
     "Add bulgogi sauce, simmer 3-4 min until glazed.",
     "Microwave spinach and edamame per package, drain well.",
     "Serve over rice with the vegetables. Fried egg on top, optional."
   ],
-  "notes": "Batch: brown the full 2 lb at once, split into 3 containers with rice and vegetables portioned per serving for the week."
+  "notes": "Batch: brown the full 3 lb at once, split into 4 containers with rice and vegetables portioned per serving for the week."
 }
 ```

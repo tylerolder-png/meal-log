@@ -123,6 +123,13 @@ full example — that's the file to hand to an LLM asked to write a new recipe.
 - **Storage is one seam.** Every read/write goes through `storage.ts`'s
   `MealLogStore` interface. Swapping in sync later means implementing that
   interface, not touching a component or hook.
+- **A staple's `name` in `seedGrocery.ts` and the matching ingredient's
+  `name` in `seedRecipes.ts` must be character-identical** (after
+  `normalizeName()`'s trim/lowercase/whitespace-collapse). That's what lets
+  "add ingredients to list" skip a duplicate instead of adding a second line
+  for the same thing. If you rebrand a staple (e.g. swap which brand of
+  ground beef it names), update every recipe ingredient that references it
+  in the same change, or the dedupe silently stops matching.
 
 ## Nutrition numbers
 
@@ -138,6 +145,62 @@ face value.
 Reference cooked-protein densities used: ground turkey 93/7 ≈ 24g/100g,
 ground beef 90/10 ≈ 26g/100g, chicken breast/thigh ≈ 28-31g/100g, salmon ≈
 20-23g/100g, Barilla Protein+ ≈ 10g per 2oz dry serving.
+
+## Brand sourcing notes
+
+Some staples/ingredients name a specific brand, screened on request for two
+things: (1) **Kroger package size** that actually matches what's bought in
+practice, and (2) avoiding companies with heavy partisan political spending
+or a bad conduct history, preferring well-regarded ones instead, where a
+brand mention is warranted at all. This is a snapshot from research done at
+one point in time (political donations and corporate conduct change) — don't
+treat it as permanently settled, re-check if it matters to you and time has
+passed.
+
+- **Ground turkey → Jennie-O 93/7** (Hormel Foods). Hormel had the steepest
+  drop in political donations of any major food company in a recent cycle
+  (down ~99%) and has barred corporate giving to dark-money 527 groups since
+  2018. Kroger only stocks Jennie-O in 1 lb trays, so "3 lb" means three
+  packs, not one — the single-pack alternative, Shady Brook Farms' 3 lb
+  family pack, is a Cargill brand, and Cargill funds election-result
+  disputers and has a mixed climate-pledge record, so it's skipped here.
+  Trade a pack of convenience for that if you'd rather.
+- **Ground beef → Simple Truth Organic 90/10 Grass-Fed** (Kroger's own
+  organic line). Confirmed as an actual 3 lb pack at Kroger, and a store
+  brand has no comparable founder/CEO political exposure. It costs more than
+  conventional 90/10 and grass-fed has a leaner, slightly different flavor —
+  swap to plain Kroger-brand ground beef (also sold at 3 lb) if that
+  trade-off isn't worth it to you.
+- **Protein shakes → Premier Protein** (BellRing Brands), **Core Power
+  dropped**. Core Power's maker, Fairlife, is Coca-Cola-backed and was sued
+  over undercover video of animal abuse at a supplier dairy; Coca-Cola and
+  others settled for $21M, and a watchdog group reported further incidents
+  through 2023. That's a clear "poor history" case, not a borderline one.
+- **Barilla Protein+ — kept, with context.** Barilla's chairman made an
+  anti-gay-family remark in 2013 that drew a real boycott call. The company's
+  response afterward was substantive, not PR: it hired a Chief Diversity
+  Officer, added trans-inclusive health coverage, and has held the Human
+  Rights Campaign's top Corporate Equality Index score for 5+ years running.
+  Kept as the original spec named it specifically, with this noted rather
+  than silently dropped or silently kept.
+- **Black beans → Bush's**, Goya avoided by name. Goya's CEO publicly praised
+  Trump at the White House and at CPAC, which is the single clearest
+  "heavy Republican ties" case in this list. Bush's is a century-old
+  family-owned company with no comparable controversy found.
+- **Other brand swaps**, same screening, lighter detail: shredded cheese →
+  **Tillamook** (farmer cooperative, well-regarded); orange juice →
+  **Florida's Natural** (grower-owned cooperative since 1933); teriyaki sauce
+  → **Kikkoman** (no controversy found, long-standing category leader);
+  tortillas → **Kroger-brand**, Mission/Gruma avoided (labor-misclassification
+  lawsuits, a 2026 plant closure criticized for "profit ahead of people," and
+  continued Russia operations post-2022 invasion); cream cheese and marinara
+  → **Kroger-brand** (no specific concern, just defaulting to the
+  no-political-footprint option where no standout alternative emerged);
+  beef sticks → **Chomps** (B Corp certified, minority family-owned).
+  Items with no brand named (eggs, chicken, salmon, produce, cottage
+  cheese, string cheese, bagels, rice, taco seasoning, bulgogi sauce, salsa)
+  weren't screened — no strong signal either way turned up, and inventing a
+  brand claim without checking it would be worse than naming none.
 
 ## Conventions
 
