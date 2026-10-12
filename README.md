@@ -7,6 +7,8 @@ off at the store. No accounts, no backend — everything lives in your browser's
 
 Companion app to [The Log](https://github.com/tylerolder-png/lift-log-template).
 
+**Live:** https://meal-log-gamma.vercel.app
+
 ## Getting started
 
 ```bash
