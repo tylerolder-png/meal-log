@@ -78,7 +78,14 @@ export function RecipeDetail({ recipe, onBack, onAddIngredients, onEdit, onDelet
         </button>
       </div>
 
-      <button type="button" className="recipe-detail__add-to-list" onClick={() => onAddIngredients(scaled)}>
+      <button
+        type="button"
+        className="recipe-detail__add-to-list"
+        onClick={() => {
+          if (navigator.vibrate) navigator.vibrate(15);
+          onAddIngredients(scaled);
+        }}
+      >
         Add ingredients to grocery list
       </button>
 
@@ -128,6 +135,7 @@ export function RecipeDetail({ recipe, onBack, onAddIngredients, onEdit, onDelet
               window.setTimeout(() => setConfirmingDelete(false), 4000);
               return;
             }
+            if (navigator.vibrate) navigator.vibrate(15);
             onDelete();
           }}
         >

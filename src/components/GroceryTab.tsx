@@ -39,6 +39,7 @@ export function GroceryTab({
       window.setTimeout(() => setConfirming((current) => (current === action ? null : current)), CONFIRM_MS);
       return;
     }
+    if (navigator.vibrate) navigator.vibrate(15);
     run();
     setConfirming(null);
   }

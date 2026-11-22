@@ -89,7 +89,10 @@ export function GroceryItemRow({ item, onToggle, onEdit, onDelete }: Props) {
         aria-checked={item.checked}
         aria-label={`${item.checked ? "Uncheck" : "Check"} ${item.name}`}
         className="grocery-item__checkbox"
-        onClick={onToggle}
+        onClick={() => {
+          if (navigator.vibrate) navigator.vibrate(15);
+          onToggle();
+        }}
       >
         {item.checked && <span className="grocery-item__check-mark">✓</span>}
       </button>
