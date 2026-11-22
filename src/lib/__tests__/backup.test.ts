@@ -32,4 +32,9 @@ describe("buildBackup / parseBackup", () => {
     const { recipes: _omit, ...rest } = buildBackup(groceryList, recipes, settings);
     expect(() => parseBackup(JSON.stringify(rest))).toThrow(/recipes/);
   });
+
+  it("rejects a backup with an invalid section in settings", () => {
+    const backup = buildBackup(groceryList, recipes, { lastSectionUsed: "Not A Section" as Settings["lastSectionUsed"] });
+    expect(() => parseBackup(JSON.stringify(backup))).toThrow(/section/);
+  });
 });

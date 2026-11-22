@@ -24,17 +24,24 @@ export function AddItemForm({ lastSectionUsed, onAdd }: Props) {
     <form className="add-item" onSubmit={handleSubmit}>
       <input
         className="add-item__name"
+        aria-label="Add an item"
         placeholder="Add an item"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         className="add-item__qty"
+        aria-label="Quantity"
         placeholder="Qty (optional)"
         value={quantityText}
         onChange={(e) => setQuantityText(e.target.value)}
       />
-      <select className="add-item__section" value={section} onChange={(e) => setSection(e.target.value as Section)}>
+      <select
+        className="add-item__section"
+        aria-label="Section"
+        value={section}
+        onChange={(e) => setSection(e.target.value as Section)}
+      >
         {SECTION_ORDER.map((s) => (
           <option key={s} value={s}>
             {s}

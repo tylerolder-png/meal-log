@@ -314,8 +314,14 @@ button:active {
 }
 
 .grocery-item--editing {
-  flex-wrap: wrap;
   padding: 10px;
+}
+
+.grocery-item__edit-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
 }
 
 .grocery-item__edit-name,
@@ -361,6 +367,12 @@ button:active {
 
 .grocery-item__delete {
   color: var(--danger);
+}
+
+.grocery-item__delete.is-confirming {
+  background: var(--danger);
+  color: var(--night);
+  font-weight: 600;
 }
 
 .add-item {

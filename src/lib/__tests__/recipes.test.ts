@@ -78,4 +78,12 @@ describe("importRecipes", () => {
     const result = importRecipes(list, [recipe({ id: "a", name: "A updated" }), recipe({ id: "c", name: "C" })]);
     expect(result.map((r) => r.name)).toEqual(["A updated", "C"]);
   });
+
+  it("keeps both recipes when two in the same pasted batch share an id, instead of one silently overwriting the other", () => {
+    const result = importRecipes([], [recipe({ id: "dup", name: "First" }), recipe({ id: "dup", name: "Second" })]);
+    expect(result).toHaveLength(2);
+    expect(result.map((r) => r.name).sort()).toEqual(["First", "Second"]);
+    // The second recipe got a fresh id rather than colliding with the first.
+    expect(new Set(result.map((r) => r.id)).size).toBe(2);
+  });
 });

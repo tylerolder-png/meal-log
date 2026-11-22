@@ -1,4 +1,4 @@
-import type { GroceryItem, Recipe, Settings } from "./types";
+import { SECTION_ORDER, type GroceryItem, type Recipe, type Settings } from "./types";
 
 export const BACKUP_VERSION = 1;
 
@@ -43,6 +43,9 @@ export function parseBackup(json: string): Backup {
   }
   if (typeof candidate.settings !== "object" || candidate.settings === null) {
     throw new Error("Backup is missing settings.");
+  }
+  if (!SECTION_ORDER.includes(candidate.settings.lastSectionUsed)) {
+    throw new Error("Backup's settings has an invalid section.");
   }
 
   return candidate as Backup;

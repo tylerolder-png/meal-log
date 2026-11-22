@@ -16,6 +16,12 @@ that app's engineering conventions (strict TS, plain CSS with tokens, a pure
 Vite + React 19 + TypeScript (strict). Plain CSS with custom properties — no
 Tailwind, no CSS-in-JS. Vitest for tests. `oxlint` for linting (already
 bundled by the Vite scaffold — no ESLint stack added on top of it).
+`@testing-library/react` + jsdom for the handful of component-wiring tests
+under `src/__tests__/` (everything under `src/lib/__tests__/` stays on the
+fast default `node` environment — add `/** @vitest-environment jsdom */` as
+the first line of a new test file only if it actually renders a component).
+GitHub Actions (`.github/workflows/ci.yml`) runs `npm run check` + `npm run
+build` on every push/PR — a regression can't reach `main` silently.
 
 ```
 npm run dev        # local server
@@ -44,6 +50,8 @@ src/
     useGroceryList.ts, useRecipes.ts, useSettings.ts, useWakeLock.ts   the only places state and persistence connect
   components/                presentational, driven by props
     PasteRecipePanel.tsx     paste text -> recipeTextParser -> prefills RecipeForm for review
+__tests__/                   component/integration tests (jsdom) - does the wiring between
+                              hooks and components actually work, not re-testing lib/ logic
 ```
 
 **The `lib/` boundary is the important one.** Anything that decides what the
@@ -124,6 +132,15 @@ full example — that's the file to hand to an LLM asked to write a new recipe.
 - **`resetToStaples()` replaces the whole list** with the seed staples,
   unchecked. This is different from "New trip," which only unchecks existing
   items and leaves ad-hoc additions in place.
+- **`importRecipes` upserts by id, but two recipes sharing an id *within the
+  same pasted batch* are not an update of each other** — there's no
+  earlier-imported version to replace, they just collide. The second one
+  gets a fresh id instead of silently overwriting the first.
+- **Backup `settings.lastSectionUsed` is validated against `SECTION_ORDER`**,
+  not just checked for being present. A hand-edited or corrupted backup with
+  a bogus section value is rejected with a clear error rather than producing
+  a `Settings` object that passes every other check but points at a section
+  that doesn't exist.
 - **Storage is one seam.** Every read/write goes through `storage.ts`'s
   `MealLogStore` interface. Swapping in sync later means implementing that
   interface, not touching a component or hook.

@@ -186,18 +186,21 @@ export function RecipeForm({ initial, title, onSave, onCancel }: Props) {
         <div key={i} className="recipe-form__ingredient">
           <input
             className="recipe-form__ingredient-name"
+            aria-label="Ingredient name"
             placeholder="Ingredient name"
             value={ing.name}
             onChange={(e) => updateIngredient(i, { name: e.target.value })}
           />
           <input
             className="recipe-form__ingredient-group"
+            aria-label="Group (optional)"
             placeholder="Group (optional, e.g. Sauce)"
             value={ing.group}
             onChange={(e) => updateIngredient(i, { group: e.target.value })}
           />
           <select
             className="recipe-form__ingredient-section"
+            aria-label="Ingredient section"
             value={ing.section}
             onChange={(e) => updateIngredient(i, { section: e.target.value as Section })}
           >
@@ -209,6 +212,7 @@ export function RecipeForm({ initial, title, onSave, onCancel }: Props) {
           </select>
           <div className="recipe-form__quantity">
             <select
+              aria-label="Quantity kind"
               value={ing.quantityKind}
               onChange={(e) => updateIngredient(i, { quantityKind: e.target.value as "amount" | "text" })}
             >
@@ -218,11 +222,13 @@ export function RecipeForm({ initial, title, onSave, onCancel }: Props) {
             {ing.quantityKind === "amount" ? (
               <>
                 <input
+                  aria-label="Amount"
                   placeholder="Amount"
                   value={ing.amount}
                   onChange={(e) => updateIngredient(i, { amount: e.target.value })}
                 />
                 <input
+                  aria-label="Unit"
                   placeholder="Unit"
                   value={ing.unit}
                   onChange={(e) => updateIngredient(i, { unit: e.target.value })}
@@ -230,6 +236,7 @@ export function RecipeForm({ initial, title, onSave, onCancel }: Props) {
               </>
             ) : (
               <input
+                aria-label="Quantity text"
                 placeholder="e.g. to taste"
                 value={ing.text}
                 onChange={(e) => updateIngredient(i, { text: e.target.value })}

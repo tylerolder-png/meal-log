@@ -4,7 +4,7 @@ import { AddItemForm } from "./AddItemForm";
 import { GroceryItemRow } from "./GroceryItemRow";
 
 /** Window to tap a confirm button again before the confirm state clears. */
-const CONFIRM_MS = 4000;
+export const CONFIRM_MS = 4000;
 
 interface Props {
   items: GroceryItem[];

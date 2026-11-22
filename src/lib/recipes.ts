@@ -29,13 +29,19 @@ export function restoreDefaults(list: Recipe[], seedRecipes: Recipe[]): Recipe[]
  * Applies validated, imported recipes: a recipe whose id already exists in
  * the list replaces it in place — re-pasting an edited version of a recipe
  * you already have is how you update it. A new id is appended.
+ *
+ * If the pasted batch itself has two recipes sharing an id, the second is
+ * not an "update" of the first — there's no earlier-imported version to
+ * update, they just happen to collide. Give it a fresh id instead of
+ * silently overwriting the first one in the same import.
  */
 export function importRecipes(list: Recipe[], parsed: Recipe[]): Recipe[] {
   let next = list;
+  const seenInBatch = new Set<string>();
   for (const recipe of parsed) {
-    next = next.some((r) => r.id === recipe.id)
-      ? next.map((r) => (r.id === recipe.id ? recipe : r))
-      : [...next, recipe];
+    const r = seenInBatch.has(recipe.id) ? { ...recipe, id: crypto.randomUUID() } : recipe;
+    seenInBatch.add(recipe.id);
+    next = next.some((x) => x.id === r.id) ? next.map((x) => (x.id === r.id ? r : x)) : [...next, r];
   }
   return next;
 }
